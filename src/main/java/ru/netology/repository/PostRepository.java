@@ -1,5 +1,5 @@
 package ru.netology.repository;
-
+import ru.netology.exception.NotFoundException;
 import ru.netology.model.Post;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class PostRepository {
         return Optional.ofNullable(allPosts.get(id));
     }
 
-    public Post save(Post savePost) {
+    public Optional<Post> save(Post savePost) {
         if (savePost.getId() == 0) {
             long id = idCounter.incrementAndGet();
             savePost.setId(id);
@@ -32,10 +32,14 @@ public class PostRepository {
             Long currentId = savePost.getId();
             allPosts.put(currentId, savePost);
         }
-        return savePost;
+        return Optional.of(savePost);
     }
 
-    public void removeById(long id) {
-        allPosts.remove(id);
+    public void removeById(long id)  {
+        if (allPosts.containsKey(id)) {
+            allPosts.remove(id);
+        } else {
+            throw new NotFoundException("Введен неверный id");
+        }
     }
 }
