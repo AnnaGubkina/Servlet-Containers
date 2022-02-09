@@ -1,4 +1,5 @@
 package ru.netology.repository;
+
 import ru.netology.exception.NotFoundException;
 import ru.netology.model.Post;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 // Stub
 public class PostRepository {
     private final Map<Long, Post> allPosts;
-    private final AtomicLong idCounter = new AtomicLong();
+    private final AtomicLong idCounter = new AtomicLong(0L);
 
     public PostRepository() {
         this.allPosts = new ConcurrentHashMap<>();
@@ -23,7 +24,7 @@ public class PostRepository {
         return Optional.ofNullable(allPosts.get(id));
     }
 
-    public Optional<Post> save(Post savePost) {
+    public Post save(Post savePost) {
         if (savePost.getId() == 0) {
             long id = idCounter.incrementAndGet();
             savePost.setId(id);
@@ -32,10 +33,10 @@ public class PostRepository {
             Long currentId = savePost.getId();
             allPosts.put(currentId, savePost);
         }
-        return Optional.of(savePost);
+        return savePost;
     }
 
-    public void removeById(long id)  {
+    public void removeById(long id) {
         if (allPosts.containsKey(id)) {
             allPosts.remove(id);
         } else {

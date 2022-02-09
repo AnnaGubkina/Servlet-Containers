@@ -9,7 +9,7 @@ import java.util.Collection;
 public class PostService {
     private final PostRepository repository;
 
-    public PostService(PostRepository repository)  {
+    public PostService(PostRepository repository) {
         this.repository = repository;
     }
 
@@ -22,7 +22,7 @@ public class PostService {
     }
 
     public Post save(Post post) {
-        return repository.save(post).orElseThrow(NotFoundException::new);
+        return repository.save(post);
     }
 
     public void removeById(long id) {

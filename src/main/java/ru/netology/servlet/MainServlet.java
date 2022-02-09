@@ -5,11 +5,9 @@ import ru.netology.exception.NotFoundException;
 import ru.netology.repository.PostRepository;
 import ru.netology.service.PostService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
     public static final String API_POSTS = "/api/posts";
@@ -25,7 +23,7 @@ public class MainServlet extends HttpServlet {
     }
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) {
         // если деплоились в root context, то достаточно этого
         try {
             final var path = req.getRequestURI();
@@ -37,7 +35,7 @@ public class MainServlet extends HttpServlet {
             }
             if (method.equals("GET") && path.matches(API_POSTS_D)) {
                 // easy way
-                final var id = Long.parseLong(path.substring(path.lastIndexOf(STR)));
+                final var id = Long.parseLong(path.substring(path.lastIndexOf(STR) + 1));
                 controller.getById(id, resp);
                 return;
             }
@@ -47,7 +45,7 @@ public class MainServlet extends HttpServlet {
             }
             if (method.equals("DELETE") && path.matches(API_POSTS_D)) {
                 // easy way
-                final var id = parseId(path);
+                final var id = Long.parseLong(path.substring(path.lastIndexOf(STR) + 1));
                 controller.removeById(id, resp);
                 return;
             }

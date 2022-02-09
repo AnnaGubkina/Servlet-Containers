@@ -25,7 +25,7 @@ public class PostController {
         response.getWriter().print(gson.toJson(data));
     }
 
-    public void getById(long id, HttpServletResponse response) throws IOException , NotFoundException {
+    public void getById(long id, HttpServletResponse response) throws IOException, NotFoundException {
         response.setContentType(APPLICATION_JSON);
         final var post = service.getById(id);
         response.getWriter().print(gson.toJson(post));
