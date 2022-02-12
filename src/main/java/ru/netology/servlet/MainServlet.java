@@ -1,5 +1,6 @@
 package ru.netology.servlet;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.netology.controller.PostController;
 import ru.netology.exception.NotFoundException;
 import ru.netology.repository.PostRepository;
@@ -17,9 +18,12 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() {
-        final var repository = new PostRepository();
-        final var service = new PostService(repository);
-        controller = new PostController(service);
+        // отдаём список пакетов, в которых нужно искать аннотированные классы
+        final var context = new AnnotationConfigApplicationContext("ru.netology");
+        // получаем бины по имени класса;
+        controller = context.getBean(PostController.class);
+        final PostService service = context.getBean(PostService.class);
+        final PostRepository repository = context.getBean(PostRepository.class);
     }
 
     @Override
