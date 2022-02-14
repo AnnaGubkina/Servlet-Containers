@@ -4,8 +4,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import ru.netology.config.JavaConfig;
 import ru.netology.controller.PostController;
 import ru.netology.exception.NotFoundException;
-import ru.netology.repository.PostRepository;
-import ru.netology.service.PostService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +21,6 @@ public class MainServlet extends HttpServlet {
         final var context = new AnnotationConfigApplicationContext(JavaConfig.class);
         // получаем бины по имени класса;
         controller = context.getBean(PostController.class);
-        final PostService service = context.getBean(PostService.class);
-        final PostRepository repository = context.getBean(PostRepository.class);
     }
 
     @Override

@@ -44,5 +44,6 @@ public class PostController {
         final var data = service.getById(id);
         service.removeById(id);
         response.getWriter().print(gson.toJson(data));
+
     }
 }
