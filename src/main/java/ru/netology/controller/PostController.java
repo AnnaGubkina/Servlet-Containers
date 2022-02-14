@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Reader;
 
+
 public class PostController {
     public static final String APPLICATION_JSON = "application/json";
     private final PostService service;
@@ -43,5 +44,6 @@ public class PostController {
         final var data = service.getById(id);
         service.removeById(id);
         response.getWriter().print(gson.toJson(data));
+
     }
 }
